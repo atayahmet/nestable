@@ -5,6 +5,7 @@ return [
     'primary_key' => 'id',
     'generate_url'   => true,
     'childNode' => 'child',
+    'key_name' => 'name',
     'body' => [
         'id',
         'name',
