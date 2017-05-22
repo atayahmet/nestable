@@ -166,7 +166,7 @@ class NestableService
             if (intval($item[$this->parent]) == intval($args['parent'])) {
                 // fill the array with the body fields
                 foreach ($this->config['body'] as $field) {
-                    $currentData->put($field, isset($item[$field]) ? $item[$field] : null);
+                    $currentData->put($this->config['key_name'], isset($item[$field]) ? $item[$field] : null);
                 }
 
                 // Get the child node name
