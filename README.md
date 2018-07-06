@@ -435,6 +435,125 @@ Dropdown/listbox attributes.
 Category::attr(['name' => 'categories', 'class' => 'red'])->renderAsDropdown();
 ```
 
+
+filter(callable $filter)
+---
+
+```php
+<?php
+
+Menu::nested()->filter(callable $function)->get();
+
+```
+
+```php
+<?php
+
+array:2 [
+      0 => array:5 [
+        "id" => 1
+        "name" => "T-shirts"
+        "category" => "t-shirt"
+        "slug" => "t-shirts"
+        "child" => array:2 [
+          0 => array:5 [
+            "id" => 2
+            "name" => "Red T-shirts"
+            "category" => "t-shirt"
+            "slug" => "red-t-shirts"
+            "child" => []
+            "parent_id" => 1
+          ]
+          1 => array:5 [
+            "id" => 3
+            "name" => "Black T-shirts"
+            "category" => "t-shirt"
+            "slug" => "black-t-shirts"
+            "child" => []
+            "parent_id" => 1
+          ]
+        ]
+        "parent_id" => 0
+      ]
+      1 => array:5 [
+        "id" => 4
+        "name" => "Sweaters"
+        "category" => "sweater"
+        "slug" => "sweaters"
+        "child" => array:1 [
+          0 => array:5 [
+            "id" => 5
+            "name" => "Red Sweaters"
+            "slug" => "red-sweaters"
+            "child" => []
+            "parent_id" => 4
+          ]
+        ]
+      ]
+    ]
+```
+
+Example
+
+```php
+<?php
+
+Menu::nested()->filter(function($item){
+    return $item->category=='t-shirt';
+})->get();
+
+```
+
+Output
+```php
+<?php
+
+
+array:1 [
+      0 => array:5 [
+        "id" => 1
+        "name" => "T-shirts"
+        "category" => "t-shirt"
+        "slug" => "t-shirts"
+        "child" => array:2 [
+          0 => array:5 [
+            "id" => 2
+            "name" => "Red T-shirts"
+            "category" => "t-shirt"
+            "slug" => "red-t-shirts"
+            "child" => []
+            "parent_id" => 1
+          ]
+          1 => array:5 [
+            "id" => 3
+            "name" => "Black T-shirts"
+            "category" => "t-shirt"
+            "slug" => "black-t-shirts"
+            "child" => []
+            "parent_id" => 1
+          ]
+        ]
+        "parent_id" => 0
+      ]
+    ]
+```
+
+Note:
+
+`filter()` can be chained.
+
+```php
+<?php
+
+Menu::nested()->filter(function($item){
+    return $item->category=='t-shirt';
+})->filter(function($item){
+    return $item->id <= 2;
+})->get();
+
+```
+
+
 Configuration
 ---
 
