@@ -446,19 +446,21 @@ Menu::nested()->filter(callable $function)->get();
 
 ```
 
-```php
+```
 <?php
 
-array:2 [
+array:1 [
       0 => array:5 [
         "id" => 1
         "name" => "T-shirts"
+        rank"  => 1
         "category" => "t-shirt"
         "slug" => "t-shirts"
         "child" => array:2 [
           0 => array:5 [
             "id" => 2
             "name" => "Red T-shirts"
+            "rank"  => 2
             "category" => "t-shirt"
             "slug" => "red-t-shirts"
             "child" => []
@@ -467,6 +469,7 @@ array:2 [
           1 => array:5 [
             "id" => 3
             "name" => "Black T-shirts"
+            "rank"  => 1 
             "category" => "t-shirt"
             "slug" => "black-t-shirts"
             "child" => []
@@ -553,6 +556,51 @@ Menu::nested()->filter(function($item){
 
 ```
 
+
+orderBy($order)
+---
+
+```
+Menu::nested()->order('rank')->get()
+
+```
+
+Output
+
+```
+<?php
+
+array:1 [
+      0 => array:5 [
+        "id" => 1
+        "name" => "T-shirts"
+        rank"  => 1
+        "category" => "t-shirt"
+        "slug" => "t-shirts"
+        "child" => array:2 [
+          0 => array:5 [
+            "id" => 2
+            "name" => "Red T-shirts"
+            "rank"  => 1
+            "category" => "t-shirt"
+            "slug" => "red-t-shirts"
+            "child" => []
+            "parent_id" => 1
+          ]
+          1 => array:5 [
+            "id" => 3
+            "name" => "Black T-shirts"
+            "rank"  => 2 
+            "category" => "t-shirt"
+            "slug" => "black-t-shirts"
+            "child" => []
+            "parent_id" => 1
+          ]
+        ]
+        "parent_id" => 0
+      ]
+    ]
+```
 
 Configuration
 ---

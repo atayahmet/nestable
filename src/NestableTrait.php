@@ -29,6 +29,11 @@ trait NestableTrait
     protected $filters = [];
 
     /**
+     * Order elements
+     */
+    protected $order;
+
+    /**
      * Service parameters.
      *
      * @var array
@@ -113,6 +118,9 @@ trait NestableTrait
             $this->source = $this->source->filter($filter);
         }
 
+        if ($this->order)
+            $this->source = $this->source->sortBy($this->order);
+
         if (!static::$nested) {
             return $this->source;
         }
@@ -128,6 +136,20 @@ trait NestableTrait
     public function filter(callable $filter)
     {
         $this->filters[] = $filter;
+
+        return $this;
+    }
+
+    /**
+     * order data
+     *
+     * @param $order
+     *
+     * @return mixed
+     */
+    public function orderBy($order)
+    {
+        $this->order = $order;
 
         return $this;
     }
