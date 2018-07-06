@@ -17,11 +17,21 @@ trait NestableTrait
     protected static $nested = false;
 
     /**
-     * Soruce data.
+     * Source data.
      *
      * @var object Illuminate\Database\Eloquent\Collection
      */
     protected $source;
+
+    /**
+     * Filters
+     */
+    protected $filters = [];
+
+    /**
+     * Order elements
+     */
+    protected $order;
 
     /**
      * Service parameters.
@@ -104,11 +114,44 @@ trait NestableTrait
             $this->source = parent::all();
         }
 
+        foreach($this->filters as $filter) {
+            $this->source = $this->source->filter($filter);
+        }
+
+        if ($this->order)
+            $this->source = $this->source->sortBy($this->order);
+
         if (!static::$nested) {
             return $this->source;
         }
 
         return $this->to(static::$to);
+    }
+
+    /**
+     * Get filtered data from db to collection or default return.
+     *
+     * @return mixed
+     */
+    public function filter(callable $filter)
+    {
+        $this->filters[] = $filter;
+
+        return $this;
+    }
+
+    /**
+     * order data
+     *
+     * @param $order
+     *
+     * @return mixed
+     */
+    public function orderBy($order)
+    {
+        $this->order = $order;
+
+        return $this;
     }
 
     /**
