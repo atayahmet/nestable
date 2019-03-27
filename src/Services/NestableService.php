@@ -111,7 +111,21 @@ class NestableService
      * @var string
      */
     protected $customUrl;
+	/**
+     * 每次处理几级深度,-1为不限制
+     *  deeps per process
+	 *	if deep=-1 then process all Nestable
+	 *	@var int
+     */
+    private $deep = -1;
 
+    private function deepInit(){
+        if(!isset($this->config['deep'])){
+            $this->deep = -1;
+            return ;
+        }
+        $this->deep = $this->config['deep'];
+    }
     /**
      * Set the data to wrap class.
      *
